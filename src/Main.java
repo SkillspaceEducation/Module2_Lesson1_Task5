@@ -133,7 +133,6 @@ public class Main {
 
         sortTrains(trains);
 
-        Train[] trainsSort = {train1, train2, train3, train4, train5};
-        bubbleSort(trainsSort);
+        bubbleSort(trains);
     }
 }
