@@ -89,20 +89,29 @@ public class Main {
         while (!sorted) {
             sorted = true;
             for (int i = 0; i < trains.length - 1; i++) {
-                if (trains[i].getDestination().compareTo(trains[i + 1].getDestination()) < 1) {
+                if (trains[i].getDestination().compareTo(trains[i + 1].getDestination()) > 0) {
                     temp = trains[i + 1];
                     trains[i + 1] = trains[i];
                     trains[i] = temp;
                     sorted = false;
+                } else if ((trains[i].getDestination().compareTo(trains[i + 1].getDestination()) == 0)) {
+                    if (trains[i].getDepartTime().isAfter(trains[i + 1].getDepartTime())) {
+                        temp = trains[i + 1];
+                        trains[i + 1] = trains[i];
+                        trains[i] = temp;
+                        sorted = false;
+                    }
                 }
             }
         }
-        System.out.println("Номера поездов по убыванию");
+        System.out.println("Расписание поездов по пункту назначения");
         for (int i = 0; i < trains.length; i++) {
             if (i < trains.length - 1) {
-                System.out.print(trains[i].getDestination() + ", ");
+                System.out.print(trains[i].getDestination() + ", №" + trains[i].getNumber() + ", " +
+                        "Время отправления: " + trains[i].getDepartTime() + ";\n");
             } else {
-                System.out.print(trains[i].getDestination() + "\n");
+                System.out.print(trains[i].getDestination() + ", №" + trains[i].getNumber() + ", " +
+                        "Время отправления: " + trains[i].getDepartTime() + "\n");
             }
         }
     }
@@ -113,16 +122,16 @@ public class Main {
         Train train3 = new Train("Москва", 723, LocalTime.of(5, 35));
         Train train4 = new Train("Нижний Новгород", 59, LocalTime.of(18, 15));
         Train train5 = new Train("Уфа", 47, LocalTime.of(14, 30));
-
-        Train[] trains = {train1, train2, train3, train4, train5};
+        Train train6 = new Train("Астрахань", 109, LocalTime.of(18, 2));
+        Train[] trains = {train1, train2, train3, train4, train5, train6};
 
         Scanner scan = new Scanner(System.in);
         System.out.println("Введите номер поезда: ");
         int number = scan.nextInt();
         scan.close();
         infoAboutTrain(trains, number);
+
         sortTrains(trains);
-        System.out.println((trains[0].getDestination().compareTo(trains[1].getDestination())));
 
         Train[] trainsSort = {train1, train2, train3, train4, train5};
         bubbleSort(trainsSort);
